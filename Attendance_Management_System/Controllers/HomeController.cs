@@ -26,5 +26,12 @@ namespace Attendance_Management_System.Controllers
 
             return View();
         }
+
+        public ActionResult ReportAPage()
+        {
+            ViewBag.Message = "Your Report A page.";
+
+            return View();
+        }
     }
 }
