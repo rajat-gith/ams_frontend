@@ -1,0 +1,39 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Data.SqlClient;
+using System.Data;
+using System.Configuration;
+
+
+namespace Attedence_System.Models
+{
+    public class DBcontext
+    {
+        public SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["mycon"].ConnectionString);
+        public List<Local_employee> GetUsermodels()
+        {
+            List<Local_employee> lst = new List<Local_employee>();
+            string sqlcomm = "select * from  ";
+            SqlCommand cmd = new SqlCommand(sqlcomm, con);
+            DataTable dt = new DataTable();
+            SqlDataAdapter adp = new SqlDataAdapter(cmd);
+            adp.Fill(dt);
+            foreach (DataRow dr in dt.Rows)
+            {
+                lst.Add(new Local_employee
+                {
+                    _ID= Convert.ToInt32(dr[0]),
+                    Emp_ID= Convert.ToInt32(dr[1]),
+                    Employee_Name = Convert.ToString(dr[2]),
+                    Attend_Date=Convert.ToDateTime(dr[3]),
+                    Local_in_time=Convert.ToDateTime(dr[4]),
+                    Local_out_time=Convert.ToDateTime(dr[5])
+                });
+            }
+            return lst;
+
+        }
+    }
+}
